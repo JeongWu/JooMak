@@ -4,26 +4,18 @@
     <div class="modal-card">
       <header class="modal-header">
         <slot name="header" />
-        <h1>
-          Title
-          <img
-            id="icon_close"
-            src="@/assets/images/icon_close.svg"
-            alt="icon_close"
-            @click="$emit('close')"
-          />
-        </h1>
+        <img
+          id="icon_close"
+          src="@/assets/images/icon_close.svg"
+          alt="icon_close"
+          @click="$emit('close')"
+        />
       </header>
       <div class="modal-content">
-        <slot name="content">
-          <h1>Content</h1>
-        </slot>
+        <slot name="content"> </slot>
       </div>
       <footer class="modal-footer">
-        <slot name="footer">
-          <h1>footer</h1>
-          <button id="close-button" @click="$emit('close')">Close</button>
-        </slot>
+        <slot name="footer" />
       </footer>
     </div>
   </div>
@@ -56,6 +48,7 @@ export default {};
   color: #828282;
   cursor: pointer;
 }
+
 .overlay {
   opacity: 0.5;
   background-color: black;
@@ -71,6 +64,9 @@ export default {};
   min-height: 500px;
   z-index: 10;
   opacity: 1;
+}
+.modal-content {
+  margin: 24px;
 }
 header {
   border-bottom: 2px solid #9e9e9e;

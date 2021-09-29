@@ -16,11 +16,13 @@
         <div class="form-group">
           <label for="name">이름 </label>
           <input type="text" id="name" class="input-control" />
+          <p></p>
         </div>
 
         <div class="form-group">
           <label for="email">이메일</label>
-          <input type="email" id="email" class="input-control" />
+          <input type="text" id="email" class="input-control" />
+          <button class="input-button">인증 요청</button>
         </div>
         <div class="form-group">
           <label for="authentication">인증 번호 </label>
@@ -29,6 +31,7 @@
             id="authentication"
             class="input-control"
           />
+          <p></p>
         </div>
 
         <div class="form-group">
@@ -48,6 +51,20 @@ export default {};
 </script>
 
 <style scoped>
+.input-button {
+  margin-bottom: 10px;
+  margin-right: 8px;
+  padding: 4px;
+  margin-top: -4px;
+  width: 60%;
+}
+.form-group > input {
+  flex: 3;
+}
+.form-group > button,
+p {
+  flex: 1;
+}
 .modal,
 .overlay {
   width: 100%;

@@ -1,5 +1,5 @@
 <template>
-  <header-component v-if="!isChecked"></header-component>
+  <header-component></header-component>
   <main
     id="main"
     :class="{
@@ -9,7 +9,7 @@
   >
     <router-view />
   </main>
-  <footer-component v-if="!isChecked"></footer-component>
+  <footer-component></footer-component>
 </template>
 
 <script>
@@ -27,16 +27,9 @@ export default {
     ...mapState("common", ["currentPage", "onHome"]),
   },
   data() {
-    return {
-      isChecked: false,
-    };
+    return {};
   },
-  created() {
-    if (document.location.pathname === "/member/login") {
-      this.isChecked = true;
-      console.log("Hi");
-    }
-  },
+  created() {},
 };
 </script>
 

@@ -11,72 +11,22 @@
       </h1>
       <form class="login-form">
         <input id="username" type="text" placeholder="username" />
-        <input id="password" type="password" placeholder="password" />
+        <!-- <input id="password" type="password" placeholder="password" /> -->
+        <input id="password" type="text" placeholder="password" />
         <button>login</button>
         <div class="c-btn-group c-btn-group--block">
-          <a class="c-btn">회원 가입</a>
-          <a class="c-btn" @click="openModal">아이디 찾기</a>
-          <ModalComponent @close="closeModal" v-if="modal">
-            <template v-slot:header>
-              <h1>아이디/비밀번호 찾기</h1>
-            </template>
-            <template v-slot:content>
-              <div class="form-group">
-                <label for="name">이름 </label>
-                <input type="text" id="name" class="input-control" />
-              </div>
-
-              <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="email" id="email" class="input-control" />
-              </div>
-
-              <div class="form-group">
-                <label for="authentication">인증 번호 </label>
-                <input
-                  type="authentication"
-                  id="authentication"
-                  class="input-control"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>&nbsp;</label>
-                <button>확인</button>
-              </div>
-            </template>
-          </ModalComponent>
-          <a class="c-btn" @click="openModal">비밀번호 찾기</a>
-          <ModalComponent @close="closeModal" v-if="modal">
-            <template v-slot:header>
-              <h1>아이디/비밀번호 찾기</h1>
-            </template>
-            <template v-slot:content>
-              <div class="form-group">
-                <label for="name">이름 </label>
-                <input type="text" id="name" class="input-control" />
-              </div>
-
-              <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="email" id="email" class="input-control" />
-              </div>
-
-              <div class="form-group">
-                <label for="authentication">인증 번호 </label>
-                <input
-                  type="authentication"
-                  id="authentication"
-                  class="input-control"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>&nbsp;</label>
-                <button>확인</button>
-              </div>
-            </template>
-          </ModalComponent>
+          <!-- <a class="c-btn">회원 가입</a> -->
+          <router-link class="c-btn" to="/member/entry">회원가입 </router-link>
+          <a class="c-btn" @click="openIdModal">아이디 찾기</a>
+          <find-id-modal
+            @close="closeIdModal"
+            v-if="showIdModal"
+          ></find-id-modal>
+          <a class="c-btn" @click="openPwModal">비밀번호 찾기</a>
+          <find-pw-modal
+            @close="closePwModal"
+            v-if="showPwModal"
+          ></find-pw-modal>
         </div>
       </form>
       <div class="social-login-form">
@@ -91,31 +41,40 @@
 </template>
 
 <script>
-import ModalComponent from "@/components/client/common/share/pages/ModalComponent.vue";
+import FindIdModal from "./FindIdModal.vue";
+import FindPwModal from "./FindPwModal.vue";
+
 export default {
-  components: { ModalComponent },
+  components: { FindIdModal, FindPwModal },
   data() {
     return {
-      modal: false,
+      showIdModal: false,
+      showPwModal: false,
     };
   },
   methods: {
-    openModal() {
-      this.modal = true;
+    openIdModal() {
+      this.showIdModal = true;
     },
-    closeModal() {
-      this.modal = false;
+    closeIdModal() {
+      this.showIdModal = false;
+    },
+    openPwModal() {
+      this.showPwModal = true;
+    },
+    closePwModal() {
+      this.showPwModal = false;
     },
   },
 };
 </script>
 
-<style scoped>
+<style>
 .form-group {
   display: flex;
   flex-direction: row;
   padding: 20px;
-  width: 60%;
+  width: 70%;
   margin: 0 auto;
 }
 
@@ -174,6 +133,7 @@ button {
   border: solid 1px black;
   border-radius: 4px;
   display: inline-block;
+
   text-align: center;
 }
 .c-btn:hover,
@@ -195,6 +155,7 @@ button {
   flex-grow: 1;
 }
 .c-btn-group > .c-btn {
+  color: #828282;
   border-radius: 0;
   border: none;
   border-right: 1px solid #828282;

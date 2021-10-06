@@ -9,11 +9,26 @@
       <h1>
         Login
       </h1>
-      <form class="login-form">
-        <input id="username" type="text" placeholder="username" />
+      <form
+        class="login-form"
+        @submit="checkForm"
+        action="/check"
+        method="post"
+      >
+        <input
+          id="username"
+          type="text"
+          placeholder="username"
+          v-model="username"
+        />
         <!-- <input id="password" type="password" placeholder="password" /> -->
-        <input id="password" type="text" placeholder="password" />
-        <button>login</button>
+        <input
+          id="password"
+          type="text"
+          placeholder="password"
+          v-model="password"
+        />
+        <button type="submit">login</button>
         <div class="c-btn-group c-btn-group--block">
           <!-- <a class="c-btn">회원 가입</a> -->
           <router-link class="c-btn" to="/member/entry">회원가입 </router-link>
@@ -50,6 +65,9 @@ export default {
     return {
       showIdModal: false,
       showPwModal: false,
+      errors: [],
+      username: null,
+      password: null,
     };
   },
   methods: {
@@ -64,6 +82,10 @@ export default {
     },
     closePwModal() {
       this.showPwModal = false;
+    },
+    checkForm(e) {
+      e.preventDefault();
+      this.errors = [];
     },
   },
 };
@@ -81,19 +103,18 @@ export default {
 .form-group label {
   flex: none;
   display: block;
-  /* width: 80px; */
   /* font-weight: bold; */
   font-size: 1em;
   text-align: left;
   padding: 12px;
-  width: 7em;
+  /* width: 7em; */
   margin-right: 0.5em;
 }
 .form-group label.right-inline {
   text-align: right;
   padding-right: 8px;
   padding-left: 10px;
-  width: auto;
+  /* width: auto; */
 }
 
 .form-group .input-control {
@@ -222,7 +243,6 @@ h1 {
   margin: 0 0 24px;
   padding: 12px;
   box-sizing: border-box;
-  /* font-size: 12px; */
   border-radius: 5px;
 }
 .form button {

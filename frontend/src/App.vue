@@ -1,23 +1,23 @@
 <template>
-  <header-component v-if="!isChecked"></header-component>
+  <header-component v-if="useMainHeader"></header-component>
   <main
     id="main"
     :class="{
-      'padding-for-sticky': currentPage !== 'storeDetailPage',
+      'padding-for-sticky': paddingForSticky,
       'on-home': onHome,
     }"
   >
     <router-view />
   </main>
-  <footer-component v-if="!isChecked"></footer-component>
+  <footer-component v-if="useMainHeader"></footer-component>
 </template>
 
 <script>
 import "./assets/styles/css/style.css";
 import HeaderComponent from "./components/client/common/share/pages/HeaderComponent.vue";
 import FooterComponent from "./components/client/common/share/pages/FooterComponent.vue";
-import { mapState } from "vuex";
-
+import { mapActions, mapState } from "vuex";
+import { SET_CURRENT_PAGE } from "@/store/modules/common.js";
 export default {
   components: {
     HeaderComponent,
@@ -25,17 +25,63 @@ export default {
   },
   computed: {
     ...mapState("common", ["currentPage", "onHome"]),
+    useMainHeader() {
+      return (
+        this.currentPage !== "loginPage" &&
+        this.currentPage !== "memberEntryPage"
+      );
+    },
+    paddingForSticky() {
+      return (
+        this.currentPage !== "loginPage" &&
+        this.currentPage !== "memberEntryPage" &&
+        this.currentPage !== "storeDetailPage"
+      );
+    },
   },
-  data() {
-    return {
-      isChecked: false,
-    };
+  methods: {
+    ...mapActions("common", [`${SET_CURRENT_PAGE}`]),
+    getCurrentPageByRoute() {
+      let currentPage = "";
+      if (this.$route.name === "memberPage") {
+        switch (this.$route.params.mode) {
+          case "login":
+            currentPage = "loginPage";
+            break;
+          case "memberEntry":
+            currentPage = "memberEntryPage";
+            break;
+        }
+      } else if (this.$route.name === "myPage") {
+        switch (this.$route.params.mode) {
+          case "myInfo":
+            currentPage = "myInfoPage";
+            break;
+          case "addressConfig":
+            currentPage = "addressConfigPage";
+            break;
+          case "joomakDiary":
+            currentPage = "joomakDiaryPage";
+            break;
+        }
+      } else {
+        currentPage = this.$route.name;
+      }
+      return currentPage;
+    },
+    setCurrentPageByRoute() {
+      const currentPage = this.getCurrentPageByRoute();
+      this.SET_CURRENT_PAGE(currentPage);
+      console.log("load : " + this.currentPage);
+    },
   },
   created() {
-    if (document.location.pathname === "/member/login") {
-      this.isChecked = true;
-      // console.log("Hi");
-    }
+    // 로드/리로드 이벤트 리스너 추가 : currentPage 설정
+    window.addEventListener("load", this.setCurrentPageByRoute);
+  },
+  beforeDestroy() {
+    // 로드/리로드 이벤트 리스너 해제 : currentPage 설정
+    window.removeEventListener("load", this.setCurrentPageByRoute);
   },
 };
 </script>

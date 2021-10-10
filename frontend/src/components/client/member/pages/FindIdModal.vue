@@ -13,31 +13,39 @@
         />
       </header>
       <div class="modal-content">
-        <div class="form-group">
-          <label for="name">이름 </label>
-          <input type="text" id="name" class="input-control" />
-          <p></p>
-        </div>
+        <form @submit.prevent="onSubmit" method="post">
+          <div class="form-group">
+            <label for="name">이름 </label>
+            <input type="text" id="name" class="input-control" v-model="name" />
+          </div>
+          <p class="error-message" v-if="error.name">{{ error.name[0] }}</p>
 
-        <div class="form-group">
-          <label for="email">이메일</label>
-          <input type="text" id="email" class="input-control" />
-          <button class="input-button">인증 요청</button>
-        </div>
-        <div class="form-group">
-          <label for="authentication">인증 번호 </label>
-          <input
-            type="authentication"
-            id="authentication"
-            class="input-control"
-          />
-          <p></p>
-        </div>
+          <div class="form-group">
+            <label for="email">이메일</label>
+            <input
+              type="text"
+              id="email"
+              class="input-control"
+              v-model="email"
+            />
+            <button class="input-button">인증 요청</button>
+          </div>
+          <div class="form-group">
+            <label for="authentication">인증 번호 </label>
+            <input
+              type="authentication"
+              id="authentication"
+              class="input-control"
+              v-model="authentication"
+            />
+            <p></p>
+          </div>
 
-        <div class="form-group">
-          <label>&nbsp;</label>
-          <button>확인</button>
-        </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button type="submit" id="confirm-button">확인</button>
+          </div>
+        </form>
       </div>
       <footer class="modal-footer">
         <slot name="footer" />
@@ -47,10 +55,41 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      name: "",
+      error: { name: [] },
+    };
+  },
+  // watch: {
+  //   name(val) {
+  //     this.error.name = validator.validate("name", val);
+  //   },
+  // },
+  methods: {
+    onSubmit() {
+      this.error.name = this.validate("name", this.name);
+    },
+    validate(key, val) {
+      const errors = [];
+      if (!val) {
+        errors.push(`${key} field is required`);
+      } else {
+        if (val.length < 3) {
+          errors.push(`${key} field is required`);
+        }
+      }
+      return errors;
+    },
+  },
+};
 </script>
 
 <style scoped>
+label {
+  width: 80px;
+}
 .input-button {
   margin-bottom: 10px;
   margin-right: 8px;

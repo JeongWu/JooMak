@@ -79,9 +79,12 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import { SET_CURRENT_HOME_COORDS } from "@/store/modules/common.js";
+import {
+  SET_CURRENT_PAGE,
+  SET_ON_HOME,
+  SET_CURRENT_HOME_COORDS,
+} from "@/store/modules/common.js";
 import HomePageCategory from "@/components/client/common/home/components/HomePageCategory.vue";
-
 export default {
   components: {
     HomePageCategory,
@@ -159,6 +162,12 @@ export default {
       }
     },
   },
+  created() {
+    if (this.currentPage !== "homePage") {
+      this.$store.commit(`common/${SET_CURRENT_PAGE}`, "homePage");
+    }
+    this.$store.commit(`common/${SET_ON_HOME}`, true);
+  },
   mounted() {
     console.log(this.threeHomeCategories);
     window.addEventListener("scroll", this.onScroll);
@@ -186,7 +195,6 @@ export default {
     rgba(155, 114, 170, 0.7) 100%
   );
 }
-
 .home_background-img {
   display: flex;
   justify-content: center;
@@ -199,7 +207,6 @@ export default {
   background-repeat: no-repeat;
   background-position: bottom -220px right 0;
 }
-
 #home_category-wrap {
   z-index: 5;
   width: 55vw;
@@ -254,7 +261,6 @@ export default {
   border-bottom: 2px solid white;
   margin-right: -25%;
 }
-
 #home_deco-line {
   border: 2px solid white;
   border-top: none;
@@ -293,7 +299,6 @@ export default {
 .evening #home_deco-line {
   top: -5vh;
 }
-
 .home_background-img > img {
   position: absolute;
   top: 0;
@@ -304,12 +309,10 @@ export default {
 .sticky {
   position: fixed;
 }
-
 #div-for-off-sticky {
   width: 100%;
   height: 400vh;
 }
-
 /* 아침 */
 #homePage.morning > .home_background-color {
   background: linear-gradient(180deg, #ffc463 0%, #ffeea7 100%);
@@ -320,7 +323,6 @@ export default {
   background-repeat: no-repeat;
   background-position: bottom -220px right 0;
 }
-
 /* 점심 */
 #homePage.afternoon > .home_background-color {
   background: linear-gradient(237.43deg, #f2eeaa 0%, #88c5f7 34.6%);
@@ -331,7 +333,6 @@ export default {
   background-repeat: no-repeat;
   background-position: bottom -220px right 0;
 }
-
 /* 저녁 */
 #homePage.evening > .home_background-color {
   background: linear-gradient(
@@ -346,7 +347,6 @@ export default {
   background-repeat: no-repeat;
   background-position: bottom -220px right 0;
 }
-
 /* 야밤 */
 #homePage.night > .home_background-color {
   background: linear-gradient(

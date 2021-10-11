@@ -17,6 +17,7 @@
           <div class="form-group">
             <label for="name">이름 </label>
             <input type="text" id="name" class="input-control" v-model="name" />
+            <p></p>
           </div>
           <p class="error-message" v-if="error.name">{{ error.name[0] }}</p>
 

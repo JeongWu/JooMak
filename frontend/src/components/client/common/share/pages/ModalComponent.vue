@@ -3,7 +3,8 @@
     <div class="overlay" @click="$emit('close')"></div>
     <div class="modal-card">
       <header class="modal-header">
-        <slot name="header" />
+        <slot name="header">header</slot>
+
         <img
           id="icon_close"
           src="@/assets/images/icon_close.svg"
@@ -15,7 +16,10 @@
         <slot name="content"> </slot>
       </div>
       <footer class="modal-footer">
-        <slot name="footer" />
+        <slot name="footer">
+          footer
+          <button id="close-button" @click="$emit('close')">Close</button>
+        </slot>
       </footer>
     </div>
   </div>

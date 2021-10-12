@@ -1,171 +1,171 @@
 <template>
   <div class="register-page">
-    <div class="form">
-      <img
-        class="login-logo"
-        src="@/assets/images/JoomakLogo_login.svg"
-        alt="JoomakLogo"
-      />
-      <h1>
-        회원가입
-      </h1>
-      <form
-        class="register-form"
-        @submit="checkForm"
-        action="/check"
-        method="post"
-      >
-        <div class="form-group">
-          <label for="username">아이디 </label>
-          <div class="row">
+    <div class="register-page-wrap">
+      <div class="title">
+        <img
+          class="login-logo"
+          src="@/assets/images/JoomakLogo_login.svg"
+          alt="JoomakLogo"
+        />
+        <h1>
+          회원가입
+        </h1>
+      </div>
+      <div class="row justify-content-center">
+        <form class="col-6 g-3 needs-validation" novalidate>
+          <div class="py-3">
+            <label for="username" class="form-label">아이디</label>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                v-model="username"
+              />
+              <button class="input-button">
+                &nbsp;&nbsp; 중복 체크 &nbsp;&nbsp;
+              </button>
+            </div>
+          </div>
+          <div class="py-3">
+            <label for="password" class="form-label">비밀번호</label>
             <input
               type="text"
-              id="username"
-              class="input-control"
-              v-model="username"
+              class="form-control"
+              id="password"
+              v-model="password"
             />
-            <button class="input-button">중복 체크</button>
           </div>
-          <p class="error-message" v-if="errors.username">
-            {{ errors.username }}
-          </p>
-          <!-- <div class="valid-feedback" v-if="validation.valid.firstName">{{ validation.valid.firstName }}</div> -->
-        </div>
-
-        <div class="form-group">
-          <label for="password">비밀번호 </label>
-          <!-- <input type="password" id="password" class="input-control" /> -->
-          <input
-            type="text"
-            id="password"
-            class="input-control"
-            v-model="password"
-          />
-          <p class="error-message" v-if="errors.password">
-            {{ errors.password }}
-          </p>
-        </div>
-        <div class="form-group">
-          <label for="password-confirm">비밀번호 확인</label>
-          <!-- <input type="password" id="password-confirm" class="input-control" /> -->
-          <input
-            type="text"
-            id="password-confirm"
-            class="input-control"
-            v-model="password_confirm"
-          />
-          <p class="error-message" v-if="errors.password_confirm">
-            {{ errors.password_confirm }}
-          </p>
-        </div>
-        <div class="form-group">
-          <label for="name">이름 </label>
-          <input type="text" id="name" class="input-control" v-model="name" />
-        </div>
-
-        <div class="form-group">
-          <label for="email">이메일</label>
-          <div class="row">
-            <input
-              type="text"
-              id="email-front"
-              class="input-control"
-              v-model="email_front"
-            /><span>@ &nbsp;</span>
-            <!-- <input type="text" id="email-back" class="input-control" /> -->
-            <select id="email-back" class="input-control" v-model="email_back">
-              <option value="naver.com">naver.com</option>
-              <option value="gmail.com">gmail.com</option>
-            </select>
-
-            <button class="input-button">인증 요청</button>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="email-confirm"> </label>
-          <div class="row">
-            <input
-              type="text"
-              id="email-confirm"
-              class="input-control"
-              placeholder="인증번호 입력"
-              v-model="email_confrim"
-            />
-            <button class="input-button">확인</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="phone">휴대폰 번호</label>
-          <div class="row">
-            <!-- <input type="text" id="phone-front" class="input-control" /> -->
-            <select
-              id="phone-front"
-              class="input-control"
-              v-model="phone_front"
+          <div class="py-3">
+            <label for="password-confirm" class="form-label"
+              >비밀번호 확인</label
             >
-              <option value="010">010</option>
-            </select>
-            <span>- &nbsp;</span>
             <input
               type="text"
-              id="phone-middle"
-              class="input-control"
-              v-model="phone_middle"
-            /><span>- &nbsp;</span>
-            <input
-              type="text"
-              id="phone-back"
-              class="input-control"
-              v-model="phone_back"
+              class="form-control"
+              id="password-confirm"
+              v-model="password_confirm"
             />
           </div>
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <button id="additional">추가 정보</button>
+          <div class="py-3">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" class="form-control" id="name" v-model="name" />
           </div>
-        </div>
-        <div class="form-group">
-          <label for="birth">생년월일</label>
-          <div class="row">
-            <!-- <input type="text" id="year" class="input-control" /> -->
-            <select id="year" class="input-control"></select>
-            <span>년 &nbsp;</span>
+          <div class="py-3">
+            <label for="email" class="form-label">이메일</label>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Username"
+                aria-label="Username"
+              />
+              <span class="input-group-text">@</span>
+              <select id="email-back" class="form-select">
+                <option selected>Choose...</option>
+                <option value="naver.com">naver.com</option>
+                <option value="gmail.com">gmail.com</option>
+              </select>
+              <button class="input-button">인증번호 요청</button>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="email-confirm"
+                placeholder="인증번호 입력"
+                v-model="email_confrim"
+              />
+              <button class="input-button">인증번호 확인</button>
+            </div>
+          </div>
+          <div class="py-3">
+            <label for="phone" class="form-label">휴대폰 번호</label>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                id="phone-front"
+                class="form-control"
+                placeholder="010"
+              />
+              <span class="input-group-text">-</span>
+              <input type="text" class="form-control" id="phone-middle" />
+              <span class="input-group-text">-</span>
+              <input type="text" class="form-control" id="phone-back" />
+            </div>
+          </div>
+          <div class="additional py-3 mb-3">
+            추가 정보
+          </div>
+          <div class="py-3">
+            <label for="name" class="form-label">생년월일</label>
+            <div class="input-group mb-3">
+              <select id="year" class="form-select" placeholder="2021">
+                <option selected>Choose...</option>
+              </select>
+              <span class="input-group-text">년</span>
+              <select id="month" class="form-select" placeholder="2021">
+                <option selected>Choose...</option>
+              </select>
+
+              <span class="input-group-text">월</span>
+              <select id="day" class="form-select" placeholder="2021">
+                <option selected>Choose...</option>
+              </select>
+
+              <span class="input-group-text">일</span>
+            </div>
+          </div>
+          <div class="py-3">
+            <label for="nickname" class="form-label">별명</label>
             <input
               type="text"
-              id="month"
-              class="input-control"
-              v-model="birth"
-            /><span>월 &nbsp;</span>
-            <input type="text" id="day" class="input-control" /><span>일</span>
+              class="form-control"
+              id="nickname"
+              v-model="nickname"
+            />
           </div>
-        </div>
-
-        <div class="form-group">
-          <label for="nickname">별명</label>
-          <input
-            type="text"
-            id="nickname"
-            class="input-control"
-            v-model="nickname"
-          />
-        </div>
-        <div class="form-group">
-          <label for="gender">성별</label>
-          <div class="row">
-            <select id="gender" class="input-control" v-model="gender">
-              <option value="남">남</option>
-              <option value="여">여</option>
-            </select>
+          <div class="py-3">
+            <label for="gender" class="form-label">성별</label>
+            <div class="input-group mb-3">
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio1"
+                  value="option1"
+                />
+                <label class="form-check-label" for="inlineRadio1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="inlineRadio2"
+                  value="option2"
+                />
+                <label class="form-check-label" for="inlineRadio2">2</label>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <button type="submit" class="input-button">확인</button>
-          <!-- <input type="submit" value="Submit" /> -->
-        </div>
-      </form>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button
+              class="submit-button d-grid gap-2 col-6 mx-auto"
+              type="submit"
+            >
+              돌아가기
+            </button>
+            <button
+              class="submit-button d-grid gap-2 col-6 mx-auto"
+              type="submit"
+            >
+              회원가입
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -220,70 +220,39 @@ export default {
 };
 </script>
 <style scoped>
-.error-message {
-  padding-left: 5px;
-  margin-top: 0px;
-  font-size: 10px;
-  color: red;
-  text-align: left;
+input[type="radio"] {
+  background-color: #ffffff;
+  border: 1px solid #9e9e9e;
 }
-.is-valid {
-  flex: 1 1 auto;
-  display: block;
-  margin-bottom: 10px;
-  margin-right: 8px;
-  padding: 4px;
-  margin-top: -4px;
-  width: 60%;
-  border: 1px red;
-  outline: solid red;
-  background: #ffc463;
-}
-#additional {
-  background: #ffffff;
-  color: #828282;
-  border-bottom: 3px solid #ffc463;
-  /* text-decoration: underline #ffc463; */
-  border-radius: 0px;
-  font-size: 18px;
-}
-span {
-  padding: 8px;
+input[type="radio"]:checked {
+  background-color: #ffc463;
 }
 .input-button {
-  margin-bottom: 10px;
-  margin-right: 8px;
-  padding: 4px;
-  margin-top: -4px;
-  width: 60%;
+  text-transform: uppercase;
+  outline: 0;
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 5px;
+  border: 3px solid #ffc463;
+  color: #ffc463;
+  /* font-size: 12px; */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
 }
-.row {
-  display: flex;
-  flex-direction: row;
-}
-.row > input,
-.row > select {
-  flex: 3;
-}
-.row > button {
-  flex: 1;
-}
-.form-group {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  margin: 0 auto;
-}
-
-.form-group label {
-  flex: none;
-  display: block;
-  /* font-size: 1em; */
-  text-align: left;
+.submit-button {
+  text-transform: uppercase;
+  outline: 0;
+  background: #ffc463;
+  border-radius: 5px;
+  /* width: 60%; */
+  border: 0;
   padding: 12px;
-  padding-left: 4px;
-  width: 7em;
-  margin-right: 0.5em;
+  color: #ffffff;
+  /* font-size: 12px; */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
 }
 .register-page {
   margin: 0;
@@ -293,12 +262,14 @@ span {
   width: 180px;
   padding: 24px;
 }
-.form {
+.register-page-wrap {
   z-index: 1;
   background: #ffffff;
   height: 2000px;
   margin: 0px 120px;
   padding: 24px;
+}
+.title {
   text-align: center;
 }
 .form input,
@@ -312,18 +283,11 @@ span {
   /* font-size: 12px; */
   border-radius: 5px;
 }
-.form button {
-  text-transform: uppercase;
-  outline: 0;
-  background: #ffc463;
-  border-radius: 5px;
-  width: 100%;
-  border: 0;
-  padding: 12px;
-  color: #ffffff;
-  /* font-size: 12px; */
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
+.additional {
+  text-align: center;
+  color: #828282;
+  border-bottom: 3px solid #ffc463;
+  /* text-decoration: underline #ffc463; */
+  font-size: 18px;
 }
 </style>

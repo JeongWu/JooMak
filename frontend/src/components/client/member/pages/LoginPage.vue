@@ -31,8 +31,10 @@
         <button type="submit">login</button>
         <div class="c-btn-group c-btn-group--block">
           <!-- <a class="c-btn">회원 가입</a> -->
-          <router-link class="c-btn" to="/member/entry">회원가입 </router-link>
-          <a class="c-btn" @click="openIdModal">아이디 찾기</a>
+          <router-link class="c-btn right-line" to="/member/entry"
+            >회원가입
+          </router-link>
+          <a class="c-btn right-line" @click="openIdModal">아이디 찾기</a>
           <find-id-modal
             @close="closeIdModal"
             v-if="showIdModal"
@@ -91,7 +93,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .form-group {
   display: flex;
   flex-direction: row;
@@ -148,13 +150,14 @@ button {
   cursor: pointer;
   margin-left: auto;
 }
-
+a {
+  text-decoration-line: none;
+}
 .c-btn {
   padding: 0.25em 0.5em;
   border: solid 1px black;
   border-radius: 4px;
   display: inline-block;
-
   text-align: center;
 }
 .c-btn:hover,
@@ -179,10 +182,9 @@ button {
   color: #828282;
   border-radius: 0;
   border: none;
-  border-right: 1px solid #828282;
 }
-.c-btn-group > .c-btn:nth-child(3) {
-  border-right: none;
+.c-btn-group > .right-line {
+  border-right: 1px solid #828282;
 }
 h1 {
   font-size: 24px;
@@ -213,8 +215,11 @@ h1 {
   background: #ff5a58;
 }
 .login-page {
-  margin: 0;
+  /* margin: 0; */
   background-color: #fff0b1;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
 }
 .login-logo {
   width: 180px;

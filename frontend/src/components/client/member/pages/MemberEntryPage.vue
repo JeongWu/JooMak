@@ -14,92 +14,148 @@
       <div class="row justify-content-center">
         <form class="col-6 g-3 needs-validation" novalidate>
           <div class="py-3">
-            <label for="username" class="form-label">아이디</label>
-            <div class="input-group mb-3">
+            <label for="username" class="form-label"
+              >아이디<span class="require-test">*</span></label
+            >
+            <div class="input-group">
               <input
                 type="text"
                 class="form-control"
                 id="username"
                 v-model="username"
+                required
               />
-              <button class="input-button">
+
+              <button class="input-button" @click="checkId">
                 &nbsp;&nbsp; 중복 체크 &nbsp;&nbsp;
               </button>
+              <div class="invalid-feedback">
+                아이디를 입력하세요.
+              </div>
             </div>
           </div>
           <div class="py-3">
-            <label for="password" class="form-label">비밀번호</label>
+            <label for="password" class="form-label"
+              >비밀번호<span class="require-test">*</span></label
+            >
             <input
               type="text"
               class="form-control"
               id="password"
               v-model="password"
+              required
             />
+            <div class="invalid-feedback">
+              비밀번호를 입력하세요.
+            </div>
           </div>
           <div class="py-3">
             <label for="password-confirm" class="form-label"
-              >비밀번호 확인</label
+              >비밀번호 확인<span class="require-test">*</span></label
             >
             <input
               type="text"
               class="form-control"
               id="password-confirm"
               v-model="password_confirm"
+              required
             />
+            <div class="invalid-feedback">
+              비밀번호를 입력하세요.
+            </div>
           </div>
           <div class="py-3">
-            <label for="name" class="form-label">이름</label>
-            <input type="text" class="form-control" id="name" v-model="name" />
+            <label for="name" class="form-label"
+              >이름<span class="require-test">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              v-model="name"
+              required
+            />
+            <div class="invalid-feedback">
+              이름을 입력하세요.
+            </div>
           </div>
           <div class="py-3">
-            <label for="email" class="form-label">이메일</label>
+            <label for="email" class="form-label"
+              >이메일<span class="require-test">*</span></label
+            >
             <div class="input-group mb-3">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Username"
                 aria-label="Username"
+                required
               />
               <span class="input-group-text">@</span>
-              <select id="email-back" class="form-select">
-                <option selected>Choose...</option>
+              <select id="email-back" class="form-select" required>
+                <option value="" selected>Choose...</option>
                 <option value="naver.com">naver.com</option>
                 <option value="gmail.com">gmail.com</option>
               </select>
               <button class="input-button">인증번호 요청</button>
+              <div class="invalid-feedback">
+                이메일을 입력하세요.
+              </div>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input
                 type="text"
                 class="form-control"
                 id="email-confirm"
                 placeholder="인증번호 입력"
                 v-model="email_confrim"
+                required
               />
               <button class="input-button">인증번호 확인</button>
+              <div class="invalid-feedback">
+                인증번호를 입력하세요.
+              </div>
             </div>
           </div>
           <div class="py-3">
-            <label for="phone" class="form-label">휴대폰 번호</label>
+            <label for="phone" class="form-label"
+              >휴대폰 번호<span class="require-test">*</span></label
+            >
             <div class="input-group mb-3">
               <input
                 type="text"
                 id="phone-front"
                 class="form-control"
                 placeholder="010"
+                required
               />
               <span class="input-group-text">-</span>
-              <input type="text" class="form-control" id="phone-middle" />
+              <input
+                type="text"
+                class="form-control"
+                id="phone-middle"
+                required
+              />
               <span class="input-group-text">-</span>
-              <input type="text" class="form-control" id="phone-back" />
+              <input
+                type="text"
+                class="form-control"
+                id="phone-back"
+                required
+              />
+              <div class="invalid-feedback">
+                휴대폰 번호를 입력하세요.
+              </div>
             </div>
           </div>
-          <div class="additional py-3 mb-3">
-            추가 정보
-          </div>
+        </form>
+        <div class="additional py-3 mb-3">
+          추가 정보
+        </div>
+        <form class="col-6 g-3">
           <div class="py-3">
             <label for="name" class="form-label">생년월일</label>
-            <div class="input-group mb-3">
+            <div class="input-group">
               <select id="year" class="form-select" placeholder="2021">
                 <option selected>Choose...</option>
               </select>
@@ -150,16 +206,18 @@
               </div>
             </div>
           </div>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+          <div class="d-grid gap-3 d-md-flex justify-content-md-center">
             <button
-              class="submit-button d-grid gap-2 col-6 mx-auto"
+              class="submit-button d-grid gap-3 col-6 mx-auto"
               type="submit"
             >
-              돌아가기
+              <router-link class="btn-text" to="/member/login"
+                >돌아가기
+              </router-link>
             </button>
             <button
-              class="submit-button d-grid gap-2 col-6 mx-auto"
-              type="submit"
+              class="submit-button d-grid gap-3 col-6 mx-auto"
+              @click="checkForm"
             >
               회원가입
             </button>
@@ -196,36 +254,35 @@ export default {
   methods: {
     checkForm(e) {
       e.preventDefault();
-      this.errors = { username: "", password: "", name: "", phone: "" };
-      if (!this.usename) {
-        this.errors = { ...this.errors, username: "아이디 필수" };
-      }
-      if (!this.name) {
-        this.errors = { ...this.errors, name: "이름은 필수" };
-      }
-      if (!this.email) {
-        this.errors = { ...this.errors, email: "이메일 필수" };
-      }
-      if (!this.password) {
-        this.errors = { ...this.errors, password: "비밀번호 필수" };
-      } else if (this.password !== this.password_confirm) {
-        this.errors = {
-          ...this.errors,
-          password_confirm: "비밀번호가 다릅니다",
-        };
-      }
-      // if (!this.errors.length) return true;
+      var forms = document.querySelectorAll(".needs-validation");
+      forms.forEach((form) => {
+        console.log(form);
+        if (!form.checkValidity()) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        form.classList.add("was-validated");
+      });
     },
+    checkId(e) {},
   },
 };
 </script>
 <style scoped>
+.btn-text {
+  color: #ffff;
+}
 input[type="radio"] {
   background-color: #ffffff;
-  border: 1px solid #9e9e9e;
+  border: 1px solid #c0c0c0;
 }
 input[type="radio"]:checked {
   background-color: #ffc463;
+}
+.require-test {
+  color: #ffc463;
+  font-size: 18px;
+  padding-left: 4px;
 }
 .input-button {
   text-transform: uppercase;
@@ -289,5 +346,6 @@ input[type="radio"]:checked {
   border-bottom: 3px solid #ffc463;
   /* text-decoration: underline #ffc463; */
   font-size: 18px;
+  width: 55%;
 }
 </style>

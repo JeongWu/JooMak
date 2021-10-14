@@ -1,94 +1,77 @@
 <template>
-  <div class="modal">
-    <div class="overlay" @click="$emit('close')"></div>
-    <div class="modal-card">
-      <header class="modal-header">
-        <!-- <slot name="header" /> -->
-        <h1>비밀번호 찾기</h1>
-        <img
-          id="icon_close"
-          src="@/assets/images/icon_close.svg"
-          alt="icon_close"
-          @click="$emit('close')"
-        />
-      </header>
-      <div class="modal-content">
-        <div class="form-group"></div>
-
-        <div class="form-group"></div>
-        <div class="form-group">
-          <label for="name">아이디 </label>
-          <input type="text" id="id" class="input-control" />
-        </div>
-
-        <div class="form-group">
-          <label>&nbsp;</label>
-          <button>확인</button>
-        </div>
+  <form class="pt-3 g-3 needs-validation" novalidate>
+    <div class="py-3 row">
+      <label for="username" class="col-sm-2 col-form-label">아이디</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="username" required />
       </div>
-      <footer class="modal-footer">
-        <slot name="footer" />
-      </footer>
     </div>
-  </div>
+    <div class="py-3 row d-grid gap-3 d-md-flex justify-content-md-center">
+      <button
+        class="submit-button d-grid gap-3 col-6 mx-auto"
+        @click="checkForm"
+      >
+        확인
+      </button>
+    </div>
+  </form>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      name: "",
+      error: { name: [] },
+    };
+  },
+  mounted() {
+    console.log("FindIdModal");
+  },
+  methods: {
+    checkForm(e) {
+      e.preventDefault();
+      var forms = document.querySelectorAll(".needs-validation");
+      forms.forEach((form) => {
+        console.log(form);
+        if (!form.checkValidity()) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        form.classList.add("was-validated");
+      });
+      scrollTo(0, 0);
+    },
+  },
+};
 </script>
 
 <style scoped>
-.modal,
-.overlay {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  text-align: center;
-  color: #828282;
-}
-#close-button {
+.input-button {
+  text-transform: uppercase;
+  outline: 0;
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 5px;
+  border: 3px solid #ffc463;
+  color: #ffc463;
+  /* font-size: 12px; */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
   cursor: pointer;
 }
-#icon_close {
-  height: auto;
-  width: 12px;
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  color: #828282;
+.submit-button {
+  text-transform: uppercase;
+  outline: 0;
+  background: #ffc463;
+  border-radius: 5px;
+  /* width: 60%; */
+  border: 0;
+  padding: 12px;
+  color: #ffffff;
+  /* font-size: 12px; */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
   cursor: pointer;
-}
-
-.overlay {
-  opacity: 0.5;
-  background-color: black;
-}
-
-.modal-card {
-  position: relative;
-  max-width: 50%;
-  margin: auto;
-  margin-top: 100px;
-  padding: 20px;
-  background-color: white;
-  min-height: 500px;
-  z-index: 10;
-  opacity: 1;
-}
-.modal-content {
-  margin: 24px;
-}
-header {
-  border-bottom: 2px solid #9e9e9e;
-}
-footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding: 12px 0;
-  width: 100%;
-  /* border-top:1px solid; */
 }
 </style>

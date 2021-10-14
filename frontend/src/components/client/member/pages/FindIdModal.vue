@@ -1,58 +1,47 @@
 <template>
-  <div class="modal">
-    <div class="overlay" @click="$emit('close')"></div>
-    <div class="modal-card">
-      <header class="modal-header">
-        <!-- <slot name="header" /> -->
-        <h1>아이디 찾기</h1>
-        <img
-          id="icon_close"
-          src="@/assets/images/icon_close.svg"
-          alt="icon_close"
-          @click="$emit('close')"
-        />
-      </header>
-      <div class="modal-content">
-        <form @submit.prevent="onSubmit" method="post">
-          <div class="form-group">
-            <label for="name">이름 </label>
-            <input type="text" id="name" class="input-control" v-model="name" />
-            <p></p>
-          </div>
-          <p class="error-message" v-if="error.name">{{ error.name[0] }}</p>
-
-          <div class="form-group">
-            <label for="email">이메일</label>
-            <input
-              type="text"
-              id="email"
-              class="input-control"
-              v-model="email"
-            />
-            <button class="input-button">인증 요청</button>
-          </div>
-          <div class="form-group">
-            <label for="authentication">인증 번호 </label>
-            <input
-              type="authentication"
-              id="authentication"
-              class="input-control"
-              v-model="authentication"
-            />
-            <p></p>
-          </div>
-
-          <div class="form-group">
-            <label>&nbsp;</label>
-            <button type="submit" id="confirm-button">확인</button>
-          </div>
-        </form>
+  <form class="pt-3 g-3 needs-validation" novalidate>
+    <div class="py-3 row">
+      <label for="name" class="col-sm-2 col-form-label">이름</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" required />
       </div>
-      <footer class="modal-footer">
-        <slot name="footer" />
-      </footer>
     </div>
-  </div>
+    <div class="py-3 row">
+      <label for="email" class="col-sm-2 col-form-label">이메일</label>
+      <div class="col-sm-10">
+        <div class="input-group">
+          <input type="text" class="form-control" id="email" required />
+          <button class="input-button">인증번호 발송</button>
+        </div>
+      </div>
+    </div>
+    <div class="py-3 row">
+      <label for="email-confirm" class="col-sm-2 col-form-label"
+        >인증 번호</label
+      >
+      <div class="col-sm-10">
+        <input
+          type="text"
+          class="form-control"
+          id="email-confirm"
+          placeholder="인증번호 입력"
+          v-model="email_confrim"
+          required
+        />
+        <div class="invalid-feedback">
+          인증번호를 입력하세요.
+        </div>
+      </div>
+    </div>
+    <div class="py-3 row d-grid gap-3 d-md-flex justify-content-md-center">
+      <button
+        class="submit-button d-grid gap-3 col-6 mx-auto"
+        @click="checkForm"
+      >
+        확인
+      </button>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -63,99 +52,53 @@ export default {
       error: { name: [] },
     };
   },
-  // watch: {
-  //   name(val) {
-  //     this.error.name = validator.validate("name", val);
-  //   },
-  // },
+  mounted() {
+    console.log("FindIdModal");
+  },
   methods: {
-    onSubmit() {
-      this.error.name = this.validate("name", this.name);
-    },
-    validate(key, val) {
-      const errors = [];
-      if (!val) {
-        errors.push(`${key} field is required`);
-      } else {
-        if (val.length < 3) {
-          errors.push(`${key} field is required`);
+    checkForm(e) {
+      e.preventDefault();
+      var forms = document.querySelectorAll(".needs-validation");
+      forms.forEach((form) => {
+        console.log(form);
+        if (!form.checkValidity()) {
+          e.preventDefault();
+          e.stopPropagation();
         }
-      }
-      return errors;
+        form.classList.add("was-validated");
+      });
+      scrollTo(0, 0);
     },
   },
 };
 </script>
 
 <style scoped>
-label {
-  width: 80px;
-}
 .input-button {
-  margin-bottom: 10px;
-  margin-right: 8px;
-  padding: 4px;
-  margin-top: -4px;
-  width: 60%;
-}
-.form-group > input {
-  flex: 3;
-}
-.form-group > button,
-p {
-  flex: 1;
-}
-.modal,
-.overlay {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  text-align: center;
-  color: #828282;
-}
-#close-button {
+  text-transform: uppercase;
+  outline: 0;
+  z-index: 1;
+  background: #ffffff;
+  border-radius: 5px;
+  border: 3px solid #ffc463;
+  color: #ffc463;
+  /* font-size: 12px; */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
   cursor: pointer;
 }
-#icon_close {
-  height: auto;
-  width: 12px;
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  color: #828282;
+.submit-button {
+  text-transform: uppercase;
+  outline: 0;
+  background: #ffc463;
+  border-radius: 5px;
+  /* width: 60%; */
+  border: 0;
+  padding: 12px;
+  color: #ffffff;
+  /* font-size: 12px; */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
   cursor: pointer;
-}
-
-.overlay {
-  opacity: 0.5;
-  background-color: black;
-}
-
-.modal-card {
-  position: relative;
-  max-width: 50%;
-  margin: auto;
-  margin-top: 100px;
-  padding: 20px;
-  background-color: white;
-  min-height: 500px;
-  z-index: 10;
-  opacity: 1;
-}
-.modal-content {
-  margin: 24px;
-}
-header {
-  border-bottom: 2px solid #9e9e9e;
-}
-footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding: 12px 0;
-  width: 100%;
-  /* border-top:1px solid; */
 }
 </style>

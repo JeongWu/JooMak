@@ -9,32 +9,22 @@
       <h1>
         Login
       </h1>
-      <form
-        class="login-form"
-        @submit="checkForm"
-        action="/check"
-        method="post"
-      >
-        <input
-          id="username"
-          type="text"
-          placeholder="username"
-          v-model="username"
-        />
-        <!-- <input id="password" type="password" placeholder="password" /> -->
-        <input
-          id="password"
-          type="text"
-          placeholder="password"
-          v-model="password"
-        />
-        <button type="submit">login</button>
+      <form class="login-form">
+        <input id="username" type="text" placeholder="username" />
+        <input id="password" type="text" placeholder="password" />
+        <button>login</button>
         <div class="c-btn-group c-btn-group--block">
-          <!-- <a class="c-btn">회원 가입</a> -->
           <router-link class="c-btn right-line" to="/member/entry"
             >회원가입
           </router-link>
-          <a class="c-btn right-line" @click="openIdModal">아이디 찾기</a>
+
+          <a
+            class="c-btn right-line"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            >아이디 찾기</a
+          >
           <find-id-modal
             @close="closeIdModal"
             v-if="showIdModal"
@@ -60,16 +50,16 @@
 <script>
 import FindIdModal from "./FindIdModal.vue";
 import FindPwModal from "./FindPwModal.vue";
-
+import ModalTest from "@/views/ModalTest.vue";
 export default {
-  components: { FindIdModal, FindPwModal },
+  components: { FindIdModal, FindPwModal, ModalTest },
   data() {
     return {
       showIdModal: false,
       showPwModal: false,
-      errors: [],
-      username: null,
-      password: null,
+      // errors: [],
+      // username: null,
+      // password: null,
     };
   },
   methods: {
@@ -85,10 +75,10 @@ export default {
     closePwModal() {
       this.showPwModal = false;
     },
-    checkForm(e) {
-      e.preventDefault();
-      this.errors = [];
-    },
+    // checkForm(e) {
+    //   e.preventDefault();
+    //   this.errors = [];
+    // },
   },
 };
 </script>

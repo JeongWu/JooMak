@@ -207,14 +207,11 @@
             </div>
           </div>
           <div class="d-grid gap-3 d-md-flex justify-content-md-center">
-            <button
-              class="submit-button d-grid gap-3 col-6 mx-auto"
-              type="submit"
-            >
-              <router-link class="btn-text" to="/member/login"
-                >돌아가기
-              </router-link>
-            </button>
+            <router-link
+              class="back-button d-grid gap-3 col-6 mx-auto"
+              to="/member/login"
+              >돌아가기
+            </router-link>
             <button
               class="submit-button d-grid gap-3 col-6 mx-auto"
               @click="checkForm"
@@ -263,15 +260,13 @@ export default {
         }
         form.classList.add("was-validated");
       });
+      scrollTo(0, 0);
     },
     checkId(e) {},
   },
 };
 </script>
 <style scoped>
-.btn-text {
-  color: #ffff;
-}
 input[type="radio"] {
   background-color: #ffffff;
   border: 1px solid #c0c0c0;
@@ -296,6 +291,15 @@ input[type="radio"]:checked {
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+}
+.back-button {
+  outline: 0;
+  background: #ffc463;
+  border-radius: 5px;
+  border: 0;
+  color: #ffffff;
+  text-align: center;
+  padding: 12px;
 }
 .submit-button {
   text-transform: uppercase;

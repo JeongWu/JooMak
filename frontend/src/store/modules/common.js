@@ -1,6 +1,5 @@
 // common
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
-
 // homePage
 export const TOGGLE_ON_HOME = "TOGGLE_ON_HOME";
 export const SET_ON_HOME = "SET_ON_HOME";
@@ -11,6 +10,7 @@ export const SET_ON_PREVIEW_BOX = "SET_ON_PREVIEW_BOX";
 export const SET_PREVIEW_TAB = "SET_PREVIEW_TAB";
 export const TOGGLE_ON_CHOOSE_FILTER = "TOGGLE_ON_CHOOSE_FILTER";
 export const SET_SELECTED_SEARCH_FILTER = "SET_SELECTED_SEARCH_FILTER";
+export const SET_ON_MODAL = "SET_ON_MODAL";
 
 export const common = {
   namespaced: true,
@@ -18,7 +18,7 @@ export const common = {
     // common
     onLogin: false,
     currentPage: "homePage",
-
+    onModal: false,
     // homePage
     onHome: false,
     currentHomeCoords: "morning",
@@ -27,7 +27,10 @@ export const common = {
     onPreviewBox: true,
     previewTab: "info",
     onChooseFilter: false,
-    selectedSearchFilter: { text: "주막 추천순", name: "recommendOrder" },
+    selectedSearchFilter: {
+      text: "주막 추천순",
+      name: "recommendOrder",
+    },
     searchFilters: [
       { text: "주막 추천순", name: "recommendOrder" },
       { text: "별점순", name: "starOrder" },
@@ -43,7 +46,10 @@ export const common = {
     [SET_CURRENT_PAGE](state, pageName) {
       state.currentPage = pageName;
     },
-
+    [SET_ON_MODAL](state, boolean) {
+      // 주3.
+      state.onModal = boolean;
+    },
     // homePage
     [TOGGLE_ON_HOME](state) {
       state.onHome = state.onHome == true ? false : true;

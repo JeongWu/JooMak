@@ -18,22 +18,22 @@
             >회원가입
           </router-link>
 
-          <a
-            class="c-btn right-line"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+          <a class="c-btn right-line" type="button" @click="openModal"
             >아이디 찾기</a
           >
-          <find-id-modal
-            @close="closeIdModal"
-            v-if="showIdModal"
-          ></find-id-modal>
-          <a class="c-btn" @click="openPwModal">비밀번호 찾기</a>
-          <find-pw-modal
-            @close="closePwModal"
-            v-if="showPwModal"
-          ></find-pw-modal>
+          <ModalComponent @close="closeModal" v-if="onModal">
+            <template v-slot:header>
+              <h1>아이디/비밀번호 찾기</h1>
+              <hr />
+            </template>
+            <template v-slot:content>
+              <find-modal></find-modal>
+            </template>
+            <template v-slot:footer>
+              <div class="no-use"></div>
+            </template>
+          </ModalComponent>
+          <a class="c-btn" @click="openModal">비밀번호 찾기</a>
         </div>
       </form>
       <div class="social-login-form">
@@ -48,32 +48,43 @@
 </template>
 
 <script>
-import FindIdModal from "./FindIdModal.vue";
-import FindPwModal from "./FindPwModal.vue";
+import { mapState } from "vuex";
+import FindModal from "./FindModal.vue";
 import ModalTest from "@/views/ModalTest.vue";
+import ModalComponent from "@/components/client/common/share/pages/ModalComponent.vue";
+import { SET_ON_MODAL } from "@/store/modules/common.js";
 export default {
-  components: { FindIdModal, FindPwModal, ModalTest },
+  components: { FindModal, ModalTest, ModalComponent },
   data() {
     return {
-      showIdModal: false,
-      showPwModal: false,
+      // showIdModal: false,
+      // showPwModal: false,
       // errors: [],
       // username: null,
       // password: null,
     };
   },
+  computed: {
+    ...mapState("common", ["onModal"]), // 주5.
+  },
   methods: {
-    openIdModal() {
-      this.showIdModal = true;
+    // openIdModal() {
+    //   this.showIdModal = true;
+    // },
+    // closeIdModal() {
+    //   this.showIdModal = false;
+    // },
+    // openPwModal() {
+    //   this.showPwModal = true;
+    // },
+    // closePwModal() {
+    //   this.showPwModal = false;
+    // },
+    openModal() {
+      this.$store.commit(`common/${SET_ON_MODAL}`, true); // 주6.
     },
-    closeIdModal() {
-      this.showIdModal = false;
-    },
-    openPwModal() {
-      this.showPwModal = true;
-    },
-    closePwModal() {
-      this.showPwModal = false;
+    closeModal() {
+      console.log("close event 발생"); // 주7.
     },
     // checkForm(e) {
     //   e.preventDefault();

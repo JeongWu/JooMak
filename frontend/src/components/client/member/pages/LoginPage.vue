@@ -9,16 +9,33 @@
       <h1>
         Login
       </h1>
-      <form class="login-form">
-        <input id="username" type="text" placeholder="username" />
-        <input id="password" type="text" placeholder="password" />
-        <button>login</button>
-        <div class="c-btn-group c-btn-group--block">
-          <router-link class="c-btn right-line" to="/member/entry"
+      <form class="login-form needs-validation" novalidate>
+        <input
+          class="form-control"
+          id="username"
+          type="text"
+          placeholder="username"
+          required
+        />
+        <input
+          type="text"
+          class="form-control"
+          id="password"
+          placeholder="password"
+          required
+        />
+        <button
+          class="submit-button d-grid gap-3 col-6 mx-auto"
+          @click="checkForm"
+        >
+          login
+        </button>
+        <div class="row c-btn-group c-btn-group--block">
+          <router-link class="col-6 c-btn right-line" to="/member/entry"
             >회원가입
           </router-link>
 
-          <a class="c-btn right-line" type="button" @click="openModal"
+          <a class="col-6 c-btn" type="button" @click="openModal"
             >아이디 찾기</a
           >
           <ModalComponent @close="closeModal" v-if="onModal">
@@ -27,13 +44,15 @@
               <hr />
             </template>
             <template v-slot:content>
-              <find-modal></find-modal>
+              <div class="find_modal_content">
+                <find-modal></find-modal>
+              </div>
             </template>
             <template v-slot:footer>
               <div class="no-use"></div>
             </template>
           </ModalComponent>
-          <a class="c-btn" @click="openModal">비밀번호 찾기</a>
+          <!-- <a class="c-btn" @click="openModal">비밀번호 찾기</a> -->
         </div>
       </form>
       <div class="social-login-form">
@@ -55,46 +74,51 @@ import ModalComponent from "@/components/client/common/share/pages/ModalComponen
 import { SET_ON_MODAL } from "@/store/modules/common.js";
 export default {
   components: { FindModal, ModalTest, ModalComponent },
-  data() {
-    return {
-      // showIdModal: false,
-      // showPwModal: false,
-      // errors: [],
-      // username: null,
-      // password: null,
-    };
-  },
   computed: {
-    ...mapState("common", ["onModal"]), // 주5.
+    ...mapState("common", ["onModal"]),
   },
   methods: {
-    // openIdModal() {
-    //   this.showIdModal = true;
-    // },
-    // closeIdModal() {
-    //   this.showIdModal = false;
-    // },
-    // openPwModal() {
-    //   this.showPwModal = true;
-    // },
-    // closePwModal() {
-    //   this.showPwModal = false;
-    // },
     openModal() {
       this.$store.commit(`common/${SET_ON_MODAL}`, true); // 주6.
     },
     closeModal() {
       console.log("close event 발생"); // 주7.
     },
-    // checkForm(e) {
-    //   e.preventDefault();
-    //   this.errors = [];
-    // },
+    checkForm(e) {
+      e.preventDefault();
+      var forms = document.querySelectorAll(".needs-validation");
+      forms.forEach((form) => {
+        console.log(form);
+        if (!form.checkValidity()) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        form.classList.add("was-validated");
+      });
+      scrollTo(0, 0);
+    },
   },
 };
 </script>
 
 <style scoped>
+.submit-button {
+  text-transform: uppercase;
+  outline: 0;
+  background: #ffc463;
+  border-radius: 5px;
+  /* width: 60%; */
+  border: 0;
+  padding: 12px;
+  color: #ffffff;
+  /* font-size: 12px; */
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.find_modal_content {
+  margin: 36px;
+}
 .form-group {
   display: flex;
   flex-direction: row;
@@ -243,9 +267,9 @@ h1 {
 }
 .form input {
   outline: 0;
-  background: #f2f2f2;
+  /* background: #f2f2f2; */
   width: 100%;
-  border: 0;
+  /* border: 0; */
   margin: 0 0 24px;
   padding: 12px;
   box-sizing: border-box;

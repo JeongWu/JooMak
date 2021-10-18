@@ -9,6 +9,7 @@
     <div class="py-3 row d-grid gap-3 d-md-flex justify-content-md-center">
       <button
         class="submit-button d-grid gap-3 col-6 mx-auto"
+        id="pw-modal-button"
         @click="checkForm"
       >
         확인
@@ -29,19 +30,19 @@ export default {
     console.log("FindIdModal");
   },
   methods: {
-    checkForm(e) {
-      e.preventDefault();
-      var forms = document.querySelectorAll(".needs-validation");
-      forms.forEach((form) => {
-        console.log(form);
-        if (!form.checkValidity()) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-        form.classList.add("was-validated");
-      });
-      scrollTo(0, 0);
-    },
+    // checkForm(e) {
+    //   e.preventDefault();
+    //   var forms = document.querySelectorAll(".needs-validation");
+    //   forms.forEach((form) => {
+    //     console.log(form);
+    //     if (!form.checkValidity()) {
+    //       e.preventDefault();
+    //       e.stopPropagation();
+    //     }
+    //     form.classList.add("was-validated");
+    //   });
+    //   scrollTo(0, 0);
+    // },
   },
 };
 </script>

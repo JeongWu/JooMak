@@ -28,9 +28,6 @@
           v-model="email_confrim"
           required
         />
-        <div class="invalid-feedback">
-          인증번호를 입력하세요.
-        </div>
       </div>
     </div>
     <div class="py-3 row d-grid gap-3 d-md-flex justify-content-md-center">

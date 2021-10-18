@@ -9,7 +9,7 @@
       <h1>
         Login
       </h1>
-      <form class="login-form needs-validation" novalidate>
+      <form class="login-form">
         <input
           class="form-control"
           id="username"
@@ -17,6 +17,7 @@
           placeholder="username"
           required
         />
+
         <input
           type="text"
           class="form-control"
@@ -24,19 +25,14 @@
           placeholder="password"
           required
         />
-        <button
-          class="submit-button d-grid gap-3 col-6 mx-auto"
-          @click="checkForm"
-        >
-          login
-        </button>
+        <button class="submit-button" type="submit">login</button>
         <div class="row c-btn-group c-btn-group--block">
           <router-link class="col-6 c-btn right-line" to="/member/entry"
             >회원가입
           </router-link>
 
           <a class="col-6 c-btn" type="button" @click="openModal"
-            >아이디 찾기</a
+            >아이디/비밀번호 찾기</a
           >
           <ModalComponent @close="closeModal" v-if="onModal">
             <template v-slot:header>
@@ -59,7 +55,7 @@
         <p>소셜 로그인(SNS 로그인)</p>
         <div class="btn-group">
           <button class="btn-primary">Naver Login</button>
-          <button class="btn-primary">Gogle Login</button>
+          <button class="btn-primary">GOogle Login</button>
         </div>
       </div>
     </div>
@@ -84,19 +80,6 @@ export default {
     closeModal() {
       console.log("close event 발생"); // 주7.
     },
-    checkForm(e) {
-      e.preventDefault();
-      var forms = document.querySelectorAll(".needs-validation");
-      forms.forEach((form) => {
-        console.log(form);
-        if (!form.checkValidity()) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-        form.classList.add("was-validated");
-      });
-      scrollTo(0, 0);
-    },
   },
 };
 </script>
@@ -119,6 +102,7 @@ export default {
 .find_modal_content {
   margin: 36px;
 }
+
 .form-group {
   display: flex;
   flex-direction: row;
@@ -267,9 +251,9 @@ h1 {
 }
 .form input {
   outline: 0;
-  /* background: #f2f2f2; */
+  background: #f2f2f2;
   width: 100%;
-  /* border: 0; */
+  border: 0;
   margin: 0 0 24px;
   padding: 12px;
   box-sizing: border-box;
